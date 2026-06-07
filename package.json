@@ -1,45 +1,45 @@
 ﻿{
-  "name": "mcutils",
-  "version": "0.1.0",
-  "description": "Full-featured Minecraft toolkit for developers — server management, world operations, NBT, RCON, and more",
-  "license": "Apache-2.0",
-  "author": "mcutils",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "tsc -b",
-    "clean": "tsc -b --clean",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "prepublishOnly": "npm run build && npm run test"
-  },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "typescript": "^5.7.0",
-    "vitest": "^3.0.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "keywords": [
-    "minecraft",
-    "minecraft-server",
-    "nbt",
-    "rcon",
-    "server-ping",
-    "minecraft-utility",
-    "mc-server",
-    "minecraft-api"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mcutils/mcutils"
-  },
-  "bugs": {
-    "url": "https://github.com/mcutils/mcutils/issues"
-  },
-  "homepage": "https://github.com/mcutils/mcutils"
+    "name":  "mcutils",
+    "version":  "0.2.0",
+    "description":  "Full-featured Minecraft toolkit for developers — server management, world operations, NBT, RCON, and more",
+    "license":  "Apache-2.0",
+    "author":  "mcutils",
+    "private":  true,
+    "workspaces":  [
+                       "packages/*"
+                   ],
+    "scripts":  {
+                    "build":  "tsc -b",
+                    "clean":  "tsc -b --clean",
+                    "test":  "vitest run",
+                    "test:watch":  "vitest",
+                    "test:coverage":  "vitest run --coverage",
+                    "prepublishOnly":  "npm run build \u0026\u0026 npm run test"
+                },
+    "devDependencies":  {
+                            "@types/node":  "^22.0.0",
+                            "typescript":  "^5.7.0",
+                            "vitest":  "^3.0.0"
+                        },
+    "engines":  {
+                    "node":  "\u003e=18.0.0"
+                },
+    "keywords":  [
+                     "minecraft",
+                     "minecraft-server",
+                     "nbt",
+                     "rcon",
+                     "server-ping",
+                     "minecraft-utility",
+                     "mc-server",
+                     "minecraft-api"
+                 ],
+    "repository":  {
+                       "type":  "git",
+                       "url":  "https://github.com/mcutils/mcutils"
+                   },
+    "bugs":  {
+                 "url":  "https://github.com/mcutils/mcutils/issues"
+             },
+    "homepage":  "https://github.com/mcutils/mcutils"
 }

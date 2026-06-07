@@ -2,4 +2,6 @@
 export { NbtWriter } from './writer.js'
 export { getTagAtPath, getValueAtPath, setValueAtPath, nbtToValue, valueToNbt } from './path.js'
 export { toJson, toJsonString, fromJson } from './json.js'
+export { validateSchema, inferSchema } from './schema.js'
 export type { NbtJsonOptions } from './json.js'
+export type { NbtSchemaField, NbtSchemaType } from './schema.js'

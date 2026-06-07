@@ -1,0 +1,82 @@
+﻿import { NbtTag, NbtTagCompound, NbtTagList } from './types.js'
+import { NbtError } from '@mcutils/core'
+
+export type NbtSchemaType = 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' | 'string' | 'byte_array' | 'int_array' | 'long_array' | 'list' | 'compound'
+
+export interface NbtSchemaField {
+  name: string
+  type: NbtSchemaType
+  required?: boolean
+  elementType?: NbtSchemaType
+  fields?: NbtSchemaField[]
+}
+
+export function validateSchema(tag: NbtTag, schema: NbtSchemaField[]): string[] {
+  const errors: string[] = []
+  if (tag.type !== 10) {
+    errors.push('Root must be a compound tag')
+    return errors
+  }
+  validateCompound(tag as NbtTagCompound, schema, errors, '')
+  return errors
+}
+
+function validateCompound(compound: NbtTagCompound, fields: NbtSchemaField[], errors: string[], path: string): void {
+  for (const field of fields) {
+    const tag = compound.value.get(field.name)
+    if (!tag) {
+      if (field.required) errors.push(`${path}${field.name}: required but missing`)
+      continue
+    }
+    const tagType = typeName(tag.type)
+    if (tagType !== field.type) {
+      errors.push(`${path}${field.name}: expected ${field.type}, got ${tagType}`)
+      continue
+    }
+    if (field.type === 'list' && field.elementType && tag.type === 9) {
+      const list = tag as NbtTagList
+      if (list.elementType !== typeToId(field.elementType)) {
+        errors.push(`${path}${field.name}: expected list<${field.elementType}>`)
+      }
+    }
+    if (field.type === 'compound' && field.fields && tag.type === 10) {
+      validateCompound(tag as NbtTagCompound, field.fields, errors, `${path}${field.name}.`)
+    }
+  }
+}
+
+const TAG_NAMES: Record<number, NbtSchemaType> = {
+  1: 'byte', 2: 'short', 3: 'int', 4: 'long',
+  5: 'float', 6: 'double', 7: 'byte_array', 8: 'string',
+  9: 'list', 10: 'compound', 11: 'int_array', 12: 'long_array',
+}
+
+function typeName(type: number): NbtSchemaType {
+  return TAG_NAMES[type] ?? 'unknown'
+}
+
+function typeToId(type: NbtSchemaType): number {
+  const map: Record<string, number> = {
+    byte: 1, short: 2, int: 3, long: 4, float: 5, double: 6,
+    byte_array: 7, string: 8, list: 9, compound: 10, int_array: 11, long_array: 12,
+  }
+  return map[type] ?? 0
+}
+
+export function inferSchema(tag: NbtTag): NbtSchemaField[] {
+  if (tag.type !== 10) return []
+  const compound = tag as NbtTagCompound
+  const fields: NbtSchemaField[] = []
+  for (const [name, value] of compound.value) {
+    const t = typeName(value.type)
+    const field: NbtSchemaField = { name, type: t }
+    if (t === 'list' && value.type === 9) {
+      field.elementType = typeName((value as NbtTagList).elementType)
+    }
+    if (t === 'compound' && value.type === 10) {
+      field.fields = inferSchema(value)
+    }
+    fields.push(field)
+  }
+  return fields
+}

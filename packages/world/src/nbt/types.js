@@ -1,0 +1,14 @@
+export const NBT_TAG_END = 0;
+export const NBT_TAG_BYTE = 1;
+export const NBT_TAG_SHORT = 2;
+export const NBT_TAG_INT = 3;
+export const NBT_TAG_LONG = 4;
+export const NBT_TAG_FLOAT = 5;
+export const NBT_TAG_DOUBLE = 6;
+export const NBT_TAG_BYTE_ARRAY = 7;
+export const NBT_TAG_STRING = 8;
+export const NBT_TAG_LIST = 9;
+export const NBT_TAG_COMPOUND = 10;
+export const NBT_TAG_INT_ARRAY = 11;
+export const NBT_TAG_LONG_ARRAY = 12;
+//# sourceMappingURL=types.js.map
