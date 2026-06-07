@@ -1,6 +1,10 @@
 ﻿node_modules/
 dist/
 *.tsbuildinfo
+vitest.config.js
+vitest.config.js.map
+vitest.config.d.ts
+vitest.config.d.ts.map
 coverage/
 .env
 .DS_Store
