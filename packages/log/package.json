@@ -1,0 +1,22 @@
+﻿{
+  "name": "@mcutils/log",
+  "version": "0.1.0",
+  "description": "Minecraft server log parser and event extractor",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "tsc --build --clean"
+  },
+  "dependencies": {
+    "@mcutils/core": "0.1.0"
+  }
+}

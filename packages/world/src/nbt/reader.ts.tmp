@@ -1,0 +1,39 @@
+﻿  readTag(type: number): any {
+    switch (type) {
+      case 0: return { type: 0 } as any
+      case 1: return { type: 1, value: this.readByte() } as any
+      case 2: return { type: 2, value: this.readShort() } as any
+      case 3: return { type: 3, value: this.readInt() } as any
+      case 4: return { type: 4, value: this.readLong() } as any
+      case 5: return { type: 5, value: this.readFloat() } as any
+      case 6: return { type: 6, value: this.readDouble() } as any
+      case 7: return { type: 7, value: this.readByteArray() } as any
+      case 8: return { type: 8, value: this.readString() } as any
+      case 9: return this.readListTag()
+      case 10: return this.readCompound()
+      case 11: return { type: 11, value: this.readIntArray() } as any
+      case 12: return { type: 12, value: this.readLongArray() } as any
+      default: throw new NbtFormatError(`Unknown tag type: ${type}`, this.offset)
+    }
+  }
+
+  private readListTag(): any {
+    const elementType = this.readByte()
+    const length = this.readInt()
+    const value = new Array(length)
+    for (let i = 0; i < length; i++) value[i] = this.readTag(elementType)
+    return { type: 9, elementType, value }
+  }
+
+  readCompound(): any {
+    const value = new Map<string, any>()
+    while (true) {
+      const tagType = this.readByte()
+      if (tagType === 0) break
+      if (!(tagType in TAG_TYPE_NAMES)) throw new NbtFormatError(`Unknown tag type: ${tagType}`, this.offset - 1)
+      const name = this.readString()
+      const tag = this.readTag(tagType)
+      value.set(name, tag)
+    }
+    return { type: 10, value }
+  }

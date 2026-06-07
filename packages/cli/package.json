@@ -1,0 +1,28 @@
+﻿{
+  "name": "@mcutils/cli",
+  "version": "0.1.0",
+  "description": "Command-line interface for mcutils",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "mcutils": "./bin/mcutils.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "tsc --build --clean"
+  },
+  "dependencies": {
+    "@mcutils/core": "0.1.0",
+    "@mcutils/server": "0.1.0",
+    "@mcutils/world": "0.1.0",
+    "@mcutils/log": "0.1.0"
+  }
+}
